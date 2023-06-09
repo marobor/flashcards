@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ question.title }}{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <h1>{{ question.title }}</h1>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="{{ 'heading' + question.id|string }}">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#{{ 'collapse' + question.id|string }}" aria-expanded="true" aria-controls="{{ 'collapse' + question.id|string }}">
+
+                    </button>
+                </h2>
+                <div id="{{ 'collapse' + question.id|string }}" class="accordion-collapse collapse show" aria-labelledby="{{ 'heading' + question.id|string }}"
+                     data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        {{ question.content|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

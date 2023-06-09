@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Wylosowane pytania{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <h1>Wylosowane pytania</h1>
+        {% for question in questions %}
+        <div class="accordion mb-4" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="{{ 'heading' + question.id|string }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#{{ 'collapse' + question.id|string }}" aria-expanded="true" aria-controls="{{ 'collapse' + question.id|string }}">
+                        {{ question.title }}
+                    </button>
+                </h2>
+                <div id="{{ 'collapse' + question.id|string }}" class="accordion-collapse collapse" aria-labelledby="{{ 'heading' + question.id|string }}"
+                     data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        {{ question.content|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <form method="POST" action="{{ url_for('views.query_questions') }}">
+            <button name="next" type="submit" class="btn btn-lg btn-primary">Losuj kolejne pytania</button>
+            <button name="quit" type="submit" class="btn btn-lg btn-primary">Wróć do menu</button>
+        </form>
+    </div>
+{% endblock %}

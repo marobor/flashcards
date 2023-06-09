@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Fiszki na egzamin{% endblock %}
+{% block content %}
+    <div class="fiszki-container">
+        <h1>Fiszki na egzamin</h1>
+        <div class="pt-4 d-flex flex-column flex-md-row justify-content-evenly">
+            <a class="btn btn-lg btn-success" href="{{ url_for('views.query_questions') }}">Losuj 3 pytania</a>
+            <a class="btn btn-lg btn-secondary" href="{{ url_for('views.create_question') }}">Dodaj pytanie</a>
+            <a class="btn btn-lg btn-secondary" href="{{ url_for('views.show_all_questions') }}">Pokaż listę pytań</a>
+        </div>
+    </div>
+{% endblock %}

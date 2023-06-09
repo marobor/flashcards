@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Wszystkie pytania{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="container-fluid d-inline-flex justify-content-between mb-4">
+            <h1>Wszystkie tricki</h1>
+            <a class="btn btn-success" href="{{ url_for('views.create_question') }}">Dodaj nowe pytanie</a>
+        </div>
+        <ol class="list-group list-group-numbered">
+            {% for question in questions %}
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold pb-2">{{ question.title }}</div>
+
+                        <a class="btn btn-success btn-sm"
+                           href="{{ url_for('views.show_question', slug=question.slug) }}">Pokaż pytanie</a>
+
+                        <a class="ms-4 btn btn-primary btn-sm"
+                           href="{{ url_for('views.edit_question', slug=question.slug) }}">Edytuj pytanie</a>
+
+                        <form method="POST" class="ps-4 d-inline-flex"
+                              action="{{ url_for('views.delete_question', slug=question.slug) }}">
+                            <input disabled type="submit" class="btn btn-outline-secondary btn-sm" value="Usuń"
+                                   onclick="return confirm('Czy na pewno chcesz usunąć to pytanie?')">
+                        </form>
+
+                    </div>
+                    {#                    <span class="badge bg-primary rounded-pill">14</span>#}
+                </li>
+            {% endfor %}
+        </ol>
+
+        <!-- Pagination Links-->
+        <div class="text-right mt-4">
+            <a href="{{ url_for('views.show_all_questions', page=questions.prev_num) }}"
+               class="btn btn-outline-dark
+       {% if questions.page == 1 %}disabled{% endif %}">
+                &laquo;
+            </a>
+            <!-- Loop through the number of pages to display a link for each-->
+            {% for page_num in questions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    <!-- Check for the active page and set the link to "Active"-->
+                    {% if questions.page == page_num %}
+                        <a href="{{ url_for('views.show_all_questions', page=page_num) }}"
+                           class="btn btn-dark">
+                            {{ page_num }}
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('views.show_all_questions', page=page_num) }}"
+                           class="btn btn-outline-dark">
+                            {{ page_num }}
+                        </a>
+                    {% endif %}
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+            <a href="{{ url_for('views.show_all_questions', page=questions.next_num) }}"
+               class="btn btn-outline-dark
+       {% if questions.page == questions.pages %}disabled{% endif %}">
+                &raquo;
+            </a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Dodaj nowe pytanie{% endblock %}
+{% block content %}
+    {{ ckeditor.load() }}
+    <div class="container">
+        <h1 align="center">Dodaj nowe pytanie</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <label for="title" class="form-label">Treść pytania</label>
+            <input type="text" id="title" name="title" class="form-control mb-4" placeholder="Wpisz treść pytania">
+
+            <label for="content" class="form-label">Odpowiedź na pytanie</label>
+            {{ ckeditor.create() }}
+{#            <textarea name="content" id="content" class="form-control mb-4"></textarea>#}
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-lg btn-primary">Dodaj</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
